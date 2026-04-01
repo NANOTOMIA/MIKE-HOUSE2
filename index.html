@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Airbnb</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f7f7;
+}
+
+/* NAVBAR */
+nav {
+    background: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo {
+    color: #ff385c;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.buscador input {
+    padding: 8px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: 200px;
+}
+
+/* CONTENEDOR */
+.contenedor {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 30px;
+}
+
+/* TARJETAS */
+.card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-info {
+    padding: 15px;
+}
+
+.card h3 {
+    margin: 0;
+}
+
+.card p {
+    margin: 5px 0;
+    color: gray;
+}
+
+.precio {
+    font-weight: bold;
+    color: black;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">🏠 Mi Airbnb</div>
+    <div class="buscador">
+        <input type="text" placeholder="Buscar...">
+    </div>
+</nav>
+
+<!-- CONTENIDO -->
+<div class="contenedor" id="contenedor"></div>
+
+<script>
+const alojamientos = [
+    {
+        nombre: "Casa en la playa",
+        precio: "$1200 MXN / noche",
+        imagen: "https://picsum.photos/400/300?1"
+    },
+    {
+        nombre: "Cabaña en el bosque",
+        precio: "$900 MXN / noche",
+        imagen: "https://picsum.photos/400/300?2"
+    },
+    {
+        nombre: "Departamento moderno",
+        precio: "$1500 MXN / noche",
+        imagen: "https://picsum.photos/400/300?3"
+    },
+    {
+        nombre: "Loft de lujo",
+        precio: "$2000 MXN / noche",
+        imagen: "https://picsum.photos/400/300?4"
+    }
+];
+
+const contenedor = document.getElementById("contenedor");
+
+function mostrarLugares(lista) {
+    contenedor.innerHTML = "";
+    lista.forEach(lugar => {
+        contenedor.innerHTML += `
+            <div class="card">
+                <img src="${lugar.imagen}">
+                <div class="card-info">
+                    <h3>${lugar.nombre}</h3>
+                    <p class="precio">${lugar.precio}</p>
+                </div>
+            </div>
+        `;
+    });
+}
+
+mostrarLugares(alojamientos);
+
+/* BUSCADOR */
+document.querySelector("input").addEventListener("input", e => {
+    const texto = e.target.value.toLowerCase();
+
+    const filtrados = alojamientos.filter(lugar =>
+        lugar.nombre.toLowerCase().includes(texto)
+    );
+
+    mostrarLugares(filtrados);
+});
+</script>
+
+</body>
+</html>
